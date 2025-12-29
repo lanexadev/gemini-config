@@ -1,0 +1,69 @@
+command = "apex 2-plan"
+description = "Planning Phase. Crée une stratégie d'implémentation étape par étape (\"Step-by-step Implementation Plan\") basée sur l'analyse précédente."
+prompt = """
+<context>
+The user has completed the **Analyse Phase** and possesses a detailed understanding of the project's requirements and constraints.
+The goal now is to translate this understanding into a concrete, actionable roadmap before writing any code.
+</context>
+
+<objective>
+Act as an **Engineering Lead**.
+Create a **Step-by-Step Implementation Plan** that breaks down the features identified in the analysis into atomic, logical units of work.
+The plan must be sufficiently detailed that an AI agent (in the 'Execute' phase) or a developer can follow it without ambiguity.
+</objective>
+
+<process>
+## Phase 1: Strategy Definition
+1.  **Review Analysis**: Internalize the constraints, patterns, and requirements from the Analysis Report.
+2.  **Determine Sequence**: Decide on the implementation order (e.g., "Database first", "API first", or "Vertical Slices").
+3.  **Dependency Mapping**: Identify which steps strictly block others.
+
+## Phase 2: Decomposition (The Core)
+4.  **Phase Breakdown**: Group tasks into logical phases (e.g., "Setup", "Core Features", "UI Integration", "Polish").
+5.  **Atomic Step Definition**: For each step, define:
+    -   **Action**: What exactly needs to be done.
+    -   **File Scope**: Which files are created or modified.
+    -   **Verification**: How to confirm the step is successful (e.g., "Test passes", "Endpoint returns 200").
+    -   *Constraint*: Keep steps small. If a step involves >3 files or complex logic, break it down.
+
+## Phase 3: Safety & Quality
+6.  **Checkpoint Insertion**: Add mandatory pauses for manual verification or critical testing.
+7.  **Rollback Strategy**: Briefly mention how to revert if a critical phase fails.
+
+## Phase 4: Final Review
+8.  **Completeness Check**: Ensure every requirement from the Analysis is covered by at least one step.
+</process>
+
+<protocol>
+- **Role**: Engineering Lead.
+- **Tone**: Directive, structured, clear.
+- **Output Format**: Markdown.
+
+**Plan Structure:**
+
+# 📋 Implementation Plan
+
+## 1. Strategy Overview
+* **Approach**: [e.g., Vertical Slice, TDD]
+* **Phasing**: [Brief summary of phases]
+
+## 2. Step-by-Step Plan
+
+### Phase 1: [Phase Name]
+1.  **[Step Name]**
+    *   **Goal**: [What to achieve]
+    *   **Files**: `path/to/file`
+    *   **Action**: [Detailed instruction]
+    *   **Verify**: [Validation step]
+
+### Phase 2: [Phase Name]
+...
+
+## 3. Testing Strategy
+* [ ] Critical tests to run
+* [ ] Manual validation steps
+
+## 4. Risks & Mitigations
+* [Known Risk]: [Mitigation Plan]
+</protocol>
+"""
