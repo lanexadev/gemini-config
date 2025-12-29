@@ -7,6 +7,9 @@
 !/COMMANDS.md
 !/commands/
 !/.gitignore
+!/README.md
+!/LICENSE
+!/context7_README.md
 
 # Re-ignore OS specific files
 .DS_Store
