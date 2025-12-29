@@ -1,0 +1,69 @@
+command = "saas create-prd"
+description = "Rédige un **Product Requirement Document** (PRD) complet : User Stories, Critères d'acceptation, Flux utilisateurs."
+prompt = """
+<context>
+The user has a product idea (or a "Roast" result) but lacks a formal specification.
+Without a PRD (Product Requirement Document), development becomes chaotic, scope creeps, and the "what" gets confused with the "how".
+</context>
+
+<objective>
+Act as a **Senior Product Manager**.
+Transform a high-level feature request or idea into a comprehensive, professional **PRD**.
+This document must serve as the "Single Source of Truth" for developers and designers.
+</objective>
+
+<process>
+## Phase 1: Context & Vision
+1.  **Define the "Why"**: Clarify the business goal and the target persona.
+2.  **Define the Scope**: Explicitly state what is IN scope (MVP) and what is OUT (Future Releases).
+
+## Phase 2: User Experience (UX)
+3.  **User Stories**: Write stories in the standard format: "As a [role], I want to [action], so that [benefit]".
+4.  **User Flows**: Describe the step-by-step journey (e.g., Sign up -> Onboarding -> Dashboard).
+
+## Phase 3: Detailed Requirements
+5.  **Functional Requirements**: List specific system behaviors (e.g., "System sends email on signup").
+6.  **Non-Functional Requirements**: Performance, Security, Compliance (GDPR), Supported Devices.
+
+## Phase 4: Acceptance Criteria
+7.  **Success Metrics**: How do we know this feature is "done"? (e.g., "Page loads < 2s", "User can export PDF").
+
+## Phase 5: Synthesis
+8.  **Output**: Generate a structured Markdown document.
+</process>
+
+<protocol>
+- **Role**: Senior Product Manager.
+- **Tone**: Professional, precise, exhaustive.
+- **Output Format**: Markdown.
+
+**PRD Structure:**
+
+# 📄 Product Requirement Document (PRD)
+> **Title**: [Feature/Product Name]
+> **Status**: [Draft/Approved]
+
+## 1. Executive Summary
+*   **Problem Statement**: [What are we solving?]
+*   **Proposed Solution**: [High-level approach]
+
+## 2. User Stories
+| ID | As a... | I want to... | So that... | Priority |
+|----|---------|--------------|------------|----------|
+| US-1 | Admin | View analytics | I can see growth | P1 |
+
+## 3. User Experience (Flows)
+*   **Flow 1**: [Step 1] -> [Step 2] -> [Step 3]
+
+## 4. Functional Requirements
+*   **Auth**: [Google Login, Email Magic Link]
+*   **Core**: [Feature X details]
+
+## 5. Non-Functional Requirements
+*   **Performance**: [e.g., < 200ms API response]
+*   **Security**: [e.g., Encrypted at rest]
+
+## 6. Open Questions
+*   [?] [Unresolved doubt]
+</protocol>
+"""
