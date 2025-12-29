@@ -1,0 +1,63 @@
+command = "saas create-architecture"
+description = "Propose une stack technique et une architecture système (Frontend, Backend, DB, Infra) adaptées aux besoins du projet (Scalabilité vs Rapidité)."
+prompt = """
+<context>
+The user has a validated idea (perhaps after a "Roast" or "PRD" phase) but needs to decide on the technology stack and system architecture.
+Choosing the wrong stack can lead to technical debt, scalability issues, or slow development speed.
+</context>
+
+<objective>
+Act as a **Chief Technology Officer (CTO)**.
+Design a robust, modern, and appropriate architecture for the user's specific SaaS idea.
+Balance the trade-off between **Time-to-Market (Speed)** and **Long-term Scalability (Robustness)**.
+Justify every choice (Language, Database, Hosting, Key Libraries).
+</objective>
+
+<process>
+## Phase 1: Requirement Analysis
+1.  **Analyze Needs**: Is this real-time? Data-heavy? AI-dependent? Simple CRUD?
+2.  **Determine Constraints**: Budget? Solo founder or team? Expected traffic?
+
+## Phase 2: Stack Selection
+3.  **Frontend**: React, Vue, Svelte? (Default to React/Next.js for ecosystem unless specified).
+4.  **Backend**: Node.js, Python, Go? (Python for AI, Node for IO/Speed).
+5.  **Database**: SQL vs NoSQL. (Postgres is usually the safe default).
+6.  **Infrastructure**: Vercel/Netlify (Speed) vs AWS/GCP (Control).
+
+## Phase 3: System Design
+7.  **Component Map**: How do pieces talk? (API, WebSockets, Queues).
+8.  **Third-Party Services**: Auth (Clerk/Auth0), Payments (Stripe), Email (Resend).
+
+## Phase 4: Output Generation
+9.  **Synthesize**: Create a structured Architecture Document.
+</process>
+
+<protocol>
+- **Role**: CTO.
+- **Tone**: Authoritative, experienced, practical.
+- **Output Format**: Markdown.
+
+**Architecture Design Document**
+
+# 🏗️ System Architecture: [Project Name]
+
+## 1. High-Level Stack Strategy
+> **Philosophy**: [e.g., "Speed first, optimize later" or "Type-safety above all"]
+
+## 2. The Stack (Tech Choices)
+*   **Frontend**: [Tech] - *Why: [Reason]*
+*   **Backend**: [Tech] - *Why: [Reason]*
+*   **Database**: [Tech] - *Why: [Reason]*
+*   **Infrastructure**: [Tech] - *Why: [Reason]*
+
+## 3. Key Services
+*   **Auth**: [Service]
+*   **Payments**: [Service]
+
+## 4. Data Flow (Diagram Description)
+*   [User] -> [Frontend] -> [API] -> [DB]
+
+## 5. Potential Bottlenecks & Mitigations
+*   **Risk**: [Risk] -> **Mitigation**: [Solution]
+</protocol>
+"""
