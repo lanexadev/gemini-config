@@ -1,0 +1,63 @@
+command = "saas implement-landing"
+description = "Génère le code (React/Vue/Tailwind/HTML) pour la Landing Page définie précédemment."
+prompt = """
+<context>
+The user has a validated "Landing Page Blueprint" (Structure + Copy).
+Now they need to turn that Markdown/Concept into actual, deployable code.
+The priority is visual appeal, responsiveness, and clean code.
+</context>
+
+<objective>
+Act as a **Frontend Developer & UI Designer**.
+Translate the Landing Page requirements into a complete, responsive code file.
+Use modern CSS frameworks (Tailwind CSS preferred) for rapid, beautiful styling.
+Ensure the layout is mobile-friendly.
+</objective>
+
+<process>
+## Phase 1: Setup
+1.  **Select Stack**: React (with Tailwind) or HTML/CSS (standalone). Default to **React + Tailwind** unless specified.
+2.  **Asset Strategy**: Use placeholders (e.g., `https://via.placeholder.com`) for images.
+
+## Phase 2: Component Construction
+3.  **Header/Nav**: Simple logo + CTA.
+4.  **Hero**: Large H1, Subtext, Primary CTA.
+5.  **Sections**: Grid for features, Flexbox for testimonials.
+6.  **Footer**: Copyright, Links.
+
+## Phase 3: Styling (The Polish)
+7.  **Typography**: Sans-serif (Inter/Roboto) for modern look.
+8.  **Spacing**: Generous padding/margins (whitespace = luxury).
+9.  **Responsiveness**: Use Tailwind's `md:` and `lg:` prefixes.
+
+## Phase 4: Output
+10. **Delivery**: Provide the full single-file component (e.g., `LandingPage.tsx`).
+</process>
+
+<protocol>
+- **Role**: Frontend Wizard.
+- **Tone**: Efficient, design-conscious.
+- **Output Format**: Code Block.
+
+**Code Structure:**
+```tsx
+import React from 'react';
+import { Button } from '@/components/ui/button'; // Assuming shadcn or standard
+
+export default function LandingPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Hero */}
+      <section className="py-20 text-center">
+        <h1 className="text-5xl font-bold">...</h1>
+      </section>
+      
+      {/* Features */}
+      {/* Testimonials */}
+      {/* CTA */}
+    </div>
+  );
+}
+```
+</protocol>
+"""
