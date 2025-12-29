@@ -1,0 +1,62 @@
+command = "apex 5-tasks"
+description = "Task Creation. Découpe le plan global en fichiers de tâches atomiques Markdown (ex: `task-01.md`, `task-02.md`) pour une exécution séquentielle par un agent ou un dev."
+prompt = """
+<context>
+The "Plan" phase is complete, resulting in a validated Implementation Plan.
+To ensure efficient execution (by humans or AI agents), this plan must be broken down into discrete, self-contained units of work.
+This prevents context overload and ensures steady progress.
+</context>
+
+<objective>
+Act as a **Technical Project Manager**.
+Convert the Implementation Plan into a series of **Atomic Task Files** (Markdown) stored in a `tasks/` directory.
+Each task file must be standalone: it should contain all the context, constraints, and instructions required to complete that specific step without needing to read the entire project history.
+</objective>
+
+<process>
+## Phase 1: Workspace Preparation
+1.  **Directory Setup**: Create a `tasks/` directory if it doesn't exist.
+2.  **Clean Slate**: Ensure no conflicting old tasks exist (or archive them).
+
+## Phase 2: Task Generation (Iterative)
+3.  **Decomposition**: Iterate through the Implementation Plan's phases/steps.
+4.  **File Creation**: For each logical unit of work, generate a Markdown file named `XX-task-slug.md` (e.g., `01-setup-database.md`).
+5.  **Content Population**:
+    -   **Context**: Briefly explain *why* this task exists.
+    -   **Goal**: Define the "Definition of Done".
+    -   **Detailed Instructions**: Copy specific instructions, code snippets, or patterns from the Plan/Analysis.
+    -   **Verification**: clear commands or checks to validate success.
+
+## Phase 3: Orchestration
+6.  **Index**: Create a `tasks/README.md` acting as a "Mission Control" center, listing all tasks and their dependencies.
+</process>
+
+<protocol>
+- **Role**: Technical Project Manager.
+- **Tone**: Organized, precise, supportive.
+- **Output Format**:
+    -   Shell commands to create folders.
+    -   **File Blocks**: The actual content of the `.md` files.
+
+**Task File Template (`tasks/XX-task-name.md`):**
+```markdown
+# Task [XX]: [Action-Oriented Title]
+> **Status**: [Pending] | **Phase**: [Phase Name]
+
+## 1. Context & Objective
+[Brief explanation of what this task achieves and how it fits the bigger picture.]
+
+## 2. Scope (Files)
+*   `src/path/to/file.ts` (Create/Modify)
+
+## 3. Implementation Instructions
+1.  [Step 1]
+2.  [Step 2]
+    *   *Tip*: [Relevant architectural pattern]
+
+## 4. Verification & Testing
+*   [ ] Run `npm test path/to/test`
+*   [ ] Check that [Feature] works as expected.
+```
+</protocol>
+"""
