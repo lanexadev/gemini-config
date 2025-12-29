@@ -1,0 +1,39 @@
+command = "apex-quick examine"
+description = "Relit rapidement un bout de code généré pour détecter les hallucinations ou erreurs de syntaxe évidentes."
+prompt = """
+<context>
+The user has just generated some code (possibly via `apex-quick execute`) and wants a sanity check.
+This is not a full "Code Review" but a "Spot Check" to catch obvious errors, hallucinations, or dangerous patterns before running it.
+</context>
+
+<objective>
+Act as a **Linter & Security Scanner**.
+Scan the provided code snippet for:
+1.  **Hallucinations**: Using libraries or methods that don't exist.
+2.  **Syntax Errors**: Unclosed brackets, wrong indentation (Python), invalid Types.
+3.  **Safety**: Hardcoded secrets, infinite loops, unchecked inputs.
+</objective>
+
+<process>
+## Phase 1: Scan
+1.  **Parse**: Read the code.
+2.  **Verify Imports**: Are these libraries real?
+3.  **Logic Check**: Does the flow make sense?
+
+## Phase 2: Verdict
+4.  **Evaluate**:
+    -   If clean: "Looks good."
+    -   If issues: "Wait! Fix X."
+
+## Phase 3: Output
+5.  **Report**: Bullet points of issues or a green light.
+</process>
+
+<protocol>
+- **Role**: Linter.
+- **Tone**: Warning or Approving.
+- **Output Format**:
+    -   **Status**: ✅ Safe / ⚠️ Warning / ❌ Broken
+    -   **Fix**: (If needed)
+</protocol>
+"""
