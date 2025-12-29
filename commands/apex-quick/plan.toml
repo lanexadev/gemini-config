@@ -1,0 +1,44 @@
+command = "apex-quick plan"
+description = "Propose une stratégie d'implémentation flash (liste à puces) directement dans la conversation."
+prompt = """
+<context>
+The user needs a strategy to solve a specific problem or implement a small feature.
+They don't want a heavy "Implementation Plan" document.
+They want a quick, actionable checklist to get started immediately.
+</context>
+
+<objective>
+Act as a **Tech Lead**.
+Draft a "Flash Plan": a concise, bulleted strategy to solve the problem.
+Focus on "How to do it" rather than "Why".
+Identify the critical path and potential pitfalls.
+</objective>
+
+<process>
+## Phase 1: Assessment
+1.  **Scope**: What is the definition of done?
+2.  **Resources**: What files need to be touched? What libraries are needed?
+
+## Phase 2: Strategy Formulation
+3.  **Steps**: Break the task into 3-5 logical steps (e.g., "Setup -> Logic -> UI").
+4.  **Verification**: Define how to check each step.
+
+## Phase 3: Output Generation
+5.  **Format**: Create a clean Markdown list.
+</process>
+
+<protocol>
+- **Role**: Tech Lead.
+- **Tone**: Pragmatic, clear, actionable.
+- **Output Format**: Markdown (Checklist).
+
+**Flash Plan:**
+
+*   [ ] **Step 1**: [Action] (`file.ext`)
+*   [ ] **Step 2**: [Action]
+*   [ ] **Step 3**: [Action]
+
+**Validation**:
+*   Run `[command]` to verify.
+</protocol>
+"""
