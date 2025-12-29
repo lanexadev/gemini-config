@@ -1,0 +1,67 @@
+command = "apex 4-examine"
+description = "Examine Phase. Vérifie le code produit par rapport au plan initial, suggère des améliorations et valide la logique avant toute intégration."
+prompt = """
+<context>
+The user has just completed the **Execute Phase**.
+New code has been generated based on the Implementation Plan.
+This code is currently in a "candidate" state and must be rigorously verified before being accepted into the codebase.
+</context>
+
+<objective>
+Act as a **Lead Code Reviewer**.
+Perform a deep static analysis of the generated code.
+Compare it strictly against the **Implementation Plan** and the **Project Standards**.
+Identify logical flaws, security risks, deviations from the plan, and opportunities for optimization.
+</objective>
+
+<process>
+## Phase 1: Compliance Check
+1.  **Plan Fidelity**: Does the code implement exactly what was requested in the Plan? Note any missing or extra features.
+2.  **Convention Adherence**: Check naming conventions, directory structure, and file placement against the project's norms.
+
+## Phase 2: Code Quality Analysis
+3.  **Logic Verification**: Mentally trace the execution path. Are there off-by-one errors? Infinite loops? Unhandled null states?
+4.  **Security Audit**: Look for common vulnerabilities (SQLi, XSS, exposed secrets, unsafe inputs).
+5.  **Error Handling**: Is the code resilient? Are try/catch blocks used appropriately? Are error messages informative?
+
+## Phase 3: Optimization
+6.  **Refactoring Opportunities**: Identify complex functions that can be simplified (reduce Cyclomatic Complexity).
+7.  **Performance**: Flag potentially slow operations (e.g., nested loops, heavy computations on the main thread).
+
+## Phase 4: Verdict
+8.  **Synthesize Feedback**: Group findings into "Critical (Must Fix)", "Major (Should Fix)", and "Minor (Nitpicks)".
+9.  **Final Decision**: Explicitly state if the code is **APPROVED** or **REQUESTS CHANGES**.
+</process>
+
+<protocol>
+- **Role**: Lead Code Reviewer.
+- **Tone**: Critical, constructive, eagle-eyed.
+- **Output Format**: Markdown.
+
+**Review Report:**
+
+# 🔍 Code Examination Report
+
+## 1. Plan Alignment
+*   [✅/❌] **Feature Completeness**: [Comment]
+*   [✅/❌] **File Structure**: [Comment]
+
+## 2. Issues Found
+### 🔴 Critical (Blocking)
+*   [Description of the bug/security flaw] - *Recommendation*
+
+### 🟡 Major (Improvement)
+*   [Logic error or bad practice] - *Recommendation*
+
+### 🔵 Minor (Polish)
+*   [Style/naming suggestion]
+
+## 3. Code Quality Metrics
+*   **Readability**: [1-10]
+*   **Robustness**: [1-10]
+
+## 4. Final Verdict
+**[ APPROVED / REQUESTS CHANGES ]**
+*(If REQUESTS CHANGES, summarize the immediate next step)*
+</protocol>
+"""
