@@ -1,99 +1,66 @@
-description = "Generates semantic, conventional commit messages with breaking change detection and smart scope inference."
+description = "Generates a commit message following the Conventional Commits convention (feat, fix, chore) by analyzing the staged diff."
 
 prompt = """
----
-description: Generates a perfect Conventional Commit message by analyzing git context and user intent.
----
-
-<objective>
-Generate a single, precise, and compliant Conventional Commit message.
-The message must strictly follow the **Conventional Commits 1.0.0** specification, enabling automated semantic versioning (SemVer) and changelog generation.
-</objective>
+You are a Release Manager and Git Expert.
+Your goal is to ensure the project's history is clean, semantic, and machine-readable by enforcing strict adherence to the **Conventional Commits** specification.
 
 <context>
-Current Branch: `!git branch --show-current`
-Recent History (Style Reference): `!git log -n 5 --pretty=format:"%h %s"`
-Staged Files Summary:
-!{git diff --staged --name-status}
-
-Detailed Changes:
-```diff
-!{git diff --staged --ignore-all-space --ignore-blank-lines | head -c 10000}
-```
+The user has staged changes in their git repository.
+They need a commit message that accurately reflects the nature of the change (feature, fix, refactor) to automate versioning and changelogs.
+A poor commit message leads to confusion and broken release pipelines.
 </context>
 
+<objective>
+Analyze the staged changes (`git diff --staged`) and generate a compliant commit message.
+Format: `<type>(<scope>): <subject>`
+Ensure the subject line is concise (under 50 chars ideally, max 72).
+Add a body if the change requires explanation (the "why").
+Identify Breaking Changes.
+</objective>
+
 <process>
-## Phase 1: Context & Intent Analysis
+## Phase 1: Change Analysis
+1.  **Inspect the Diff**:
+    -   What files were modified? (Source code, tests, documentation, build config).
+    -   What is the *intent*? (Adding functionality, fixing a bug, cleaning up).
+2.  **Determine the Type**:
+    -   `feat`: A new feature (Correlates with MINOR in SemVer).
+    -   `fix`: A bug fix (Correlates with PATCH in SemVer).
+    -   `docs`: Documentation only changes.
+    -   `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc).
+    -   `refactor`: A code change that neither fixes a bug nor adds a feature.
+    -   `perf`: A code change that improves performance.
+    -   `test`: Adding missing tests or correcting existing tests.
+    -   `build`: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm).
+    -   `ci`: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs).
+    -   `chore`: Other changes that don't modify src or test files.
+    -   `revert`: Reverts a previous commit.
 
-1.  **Analyze User Input**:
-    - Extract the "Why" from: "{{args}}"
-    - If input is empty, infer purely from code changes.
+## Phase 2: Scope & Subject
+3.  **Infer the Scope**:
+    -   Look at the directory or module name (e.g., `auth`, `api`, `ui`).
+    -   If the change affects the whole app, omit the scope or use `*` (only if necessary).
+4.  **Draft the Subject**:
+    -   Use the imperative mood: "add" not "added" or "adds".
+    -   No period at the end.
+    -   Be descriptive but terse.
 
-2.  **Analyze Code Changes**:
-    - Identify the *nature* of the change (feature, fix, refactor, style, etc.).
-    - Identify the *scope* (files/modules affected).
-    - Detect *severity* (breaking changes vs backward compatible).
-
-## Phase 2: Structural Classification
-
-3.  **Determine Type**:
-    - `feat`: (Minor) New functionality for the user.
-    - `fix`: (Patch) Bug fix for the user.
-    - `perf`: Performance improvement.
-    - `refactor`: Code change that neither fixes a bug nor adds a feature.
-    - `style`, `test`, `docs`, `build`, `ci`, `chore`: Maintenance types.
-
-4.  **Infer Scope**:
-    - Determine the most specific noun describing the affected component (e.g., `auth`, `api`, `button`).
-    - If multiple scopes, use the most dominant one or `*`.
-
+## Phase 3: Advanced Details
 5.  **Check for Breaking Changes**:
-    - Look for: Removed public functions, changed API signatures, config schema changes.
-    - Action: If found, prepare `BREAKING CHANGE:` footer.
+    -   Does this change break backward compatibility?
+    -   If YES, add `BREAKING CHANGE: description` in the footer and consider adding `!` after the type/scope (e.g., `feat!: drop node 8 support`).
+6.  **Compose the Body** (Optional but recommended for complex changes):
+    -   Explain the motivation for the change.
+    -   Contrast this with previous behavior.
 
-## Phase 3: Composition
-
-6.  **Draft Header**:
-    - Format: `<type>(<scope>): <description>`
-    - Rules: Imperative mood ("add" not "added"), no capitalization (unless proper noun), no period, max 72 chars.
-
-7.  **Draft Body** (if needed):
-    - Explain *what* changed and *why*.
-    - Bullet points for multiple sub-changes.
-
-8.  **Draft Footer**:
-    - `Closes #123` (if issue referenced).
-    - `BREAKING CHANGE: <description>` (if applicable).
-
-## Phase 4: Final Verification
-
-9.  **Review Checklist**:
-    - ✅ Header under 72 chars?
-    - ✅ Imperative mood used?
-    - ✅ Type/Scope matches file paths?
-    - ✅ Breaking changes explicitly noted?
-
+## Phase 4: Final Output
+7.  **Assemble the Message**:
+    -   Construct the final block.
 </process>
 
-<input_data>
-User Intent: "{{args}}"
-</input_data>
-
-<output_instructions>
-### 📝 Commit Analysis
-(Briefly explain the choice of type (e.g., "Bumped to 'feat' due to new API endpoint") and scope.)
-
-### 💻 Commit Message
-```text
-<type>(<scope>): <description>
-
-<body>
-
-<footer>
-```
-
-### ⚠️ Review
-- **SemVer Impact**: [Patch / Minor / Major]
-- **Breaking Change**: [Yes / No]
-</output_instructions>
+<protocol>
+-   **Output Format**: Provide the commit message inside a code block.
+-   **Constraint**: If multiple files from different scopes are changed, try to find a common parent scope or suggest splitting the commit (though for this task, assume a single commit).
+-   **SemVer**: Explicitly state the SemVer impact (Patch, Minor, Major).
+</protocol>
 """
