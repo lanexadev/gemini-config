@@ -49,14 +49,13 @@ _Systematic implementation using Analyse-Plan-Execute-eXamine._
 
 Commandes spécifiques pour lancer des produits (SaaS, Micro-SaaS).
 
-- **`saas challenge-idea`** : "Roast my idea". Agit comme un VC ou un critique produit pour trouver les failles de marché, les problèmes de faisabilité et les concurrents d'une idée de SaaS.
 - **`saas create-architecture`** : Propose une stack technique et une architecture système (Frontend, Backend, DB, Infra) adaptées aux besoins du projet (Scalabilité vs Rapidité).
 - **`saas create-prd`** : Rédige un **Product Requirement Document** (PRD) complet : User Stories, Critères d'acceptation, Flux utilisateurs.
 - **`saas create-tasks`** : Transforme un PRD ou une liste de fonctionnalités en un backlog de tâches techniques (Jira/Linear style).
 - **`saas define-pricing`** : Analyse le marché pour proposer une stratégie de pricing (Freemium, Tiered, Usage-based) et des tableaux de prix psychologiques.
 - **`saas find-domain-name`** : Brainstorming créatif de noms de domaine disponibles, courts et "catchy", basés sur la proposition de valeur.
 - **`saas create-landing`** : Génère la structure et le contenu (Copywriting) d'une Landing Page à haute conversion (Hero, Features, Social Proof, CTA).
-- **`saas implement-landing`** : Génère le code (React/Tailwind/HTML) pour la Landing Page définie précédemment.
+- **`saas implement-landing`** : Génère le code (React/Vue/Tailwind/HTML) pour la Landing Page définie précédemment.
 - **`saas create-legals`** : Génère des modèles de base pour les documents légaux (Privacy Policy, Terms of Service) adaptés au type de service (⚠️ À vérifier par un juriste).
 
 ## 📣 Marketing & Copywriting

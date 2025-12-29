@@ -54,4 +54,4 @@ Ensure strict adherence to the project's existing style and conventions.
 -   **React**: Functional components, Hooks.
 -   **General**: DRY (Don't Repeat Yourself), SOLID principles.
 </protocol>
-""",
+"""
