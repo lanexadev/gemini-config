@@ -1,0 +1,13 @@
+# Ignore everything at the root
+/*
+
+# Whitelist useful files and directories
+!/settings.json
+!/GEMINI.md
+!/COMMANDS.md
+!/commands/
+!/.gitignore
+
+# Re-ignore OS specific files
+.DS_Store
+Thumbs.db

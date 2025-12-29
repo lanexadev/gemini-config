@@ -1,0 +1,103 @@
+description = "Generates comprehensive, robust test suites (Unit, Integration, E2E) with deep coverage analysis and mocking strategies."
+
+prompt = """
+---
+description: Generates bulletproof test suites using TDD/BDD principles, ensuring high coverage and reliability.
+---
+
+<objective>
+Generate a complete, isolated, and deterministic test suite for the provided code.
+The tests must cover happy paths, edge cases, and error states, utilizing the appropriate testing framework and mocking strategies.
+</objective>
+
+<context>
+Project Structure: `!ls -F | head -20`
+Testing Config: `!cat jest.config.js 2>/dev/null || cat pytest.ini 2>/dev/null || cat go.mod 2>/dev/null | grep -i test || echo "No test config found"`
+Existing Tests: `!find . -type f -name "*test*" -o -name "*spec*" | head -10`
+</context>
+
+<process>
+## Phase 1: Environment & Framework Detection
+
+1.  **Identify Language & Framework**:
+    - JS/TS: Jest, Vitest, Mocha.
+    - Python: Pytest, Unittest.
+    - Go: `testing` package, Testify.
+    - Java: JUnit, TestNG.
+
+2.  **Analyze Testing Conventions**:
+    - Look for existing patterns (e.g., `__tests__` folder, `*.spec.ts` naming).
+    - Determine Assertion style (`expect`, `assert`).
+
+## Phase 2: Static Code Analysis
+
+3.  **Map Control Flow**:
+    - Identify all Decision Points (`if/else`, `switch`).
+    - Identify Loops (`for`, `while`).
+    - Identify Exit Points (`return`, `throw`).
+
+4.  **Identify Dependencies (Mock Targets)**:
+    - External APIs (fetch/axios calls).
+    - Database Connections (ORM calls).
+    - System Resources (File I/O, Time/Date).
+
+## Phase 3: Test Case Design (The Strategy)
+
+5.  **Define Happy Paths**:
+    - What is the standard success scenario? (e.g., Input valid -> Returns result).
+
+6.  **Define Edge Cases (Boundary Analysis)**:
+    - Null/Undefined/Empty inputs.
+    - Max/Min integers.
+    - Special characters.
+
+7.  **Define Error States**:
+    - Network failure simulation.
+    - Invalid permissions.
+    - Thrown exceptions.
+
+## Phase 4: Test Implementation
+
+8.  **Structure the Test Suite**:
+    - **Setup (`beforeAll`/`beforeEach`)**: Initialize fixtures.
+    - **Teardown (`afterAll`/`afterEach`)**: Clean up side effects.
+    - **AAA Pattern**: For each test:
+        - **Arrange**: Prepare data/mocks.
+        - **Act**: Call the function.
+        - **Assert**: Verify the result.
+
+9.  **Write the Code**:
+    - Use descriptive names: `it('should return 400 when email is invalid', ...)`
+    - Implement Mocks: `jest.spyOn(...)`, `mockReturnValue(...)`.
+
+## Phase 5: Verification
+
+10. **Review Coverage**:
+    - Does every branch have a corresponding test?
+    - Are all mocks restored/cleared?
+    - Is the test deterministic (no race conditions)?
+
+</process>
+
+<input_data>
+{{args}}
+</input_data>
+
+<output_instructions>
+### 🧪 Generated Test Suite
+(Full, copy-pasteable code block. Include necessary imports and setup.)
+
+### 🛡️ Coverage Report
+- **Happy Paths**: [List scenarios]
+- **Edge Cases**: [List scenarios]
+- **Error States**: [List scenarios]
+
+### 🎭 Mocking Strategy
+- **Dependencies Mocked**: [List external calls]
+- **Rationale**: [Why were these mocked?]
+
+### ⚠️ Implementation Notes
+- **Prerequisites**: [Packages to install, e.g., `npm install --save-dev jest-mock-extended`]
+- **Assumptions**: [Any logic assumed due to missing context]
+</output_instructions>
+"""

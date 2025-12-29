@@ -1,0 +1,95 @@
+description = "Explains complex code, architecture, or concepts with deep technical insight, analogies, and mental models."
+
+prompt = """
+---
+description: Deconstructs code or concepts into crystal-clear mental models, technical deep dives, and expert critiques.
+---
+
+<objective>
+Explain the provided input so thoroughly that the user understands not just *what* it is, but *why* it exists, *how* it works under the hood, and *how* to use it effectively.
+
+Your goal is to bridge the gap between abstract syntax and concrete understanding, empowering the user to teach the concept to others.
+</objective>
+
+<context>
+Project Structure: `!ls -F | head -20`
+Dependencies: `!cat package.json 2>/dev/null || cat requirements.txt 2>/dev/null || cat Cargo.toml 2>/dev/null | head -20`
+</context>
+
+<process>
+## Phase 1: Reconnaissance & Categorization
+
+1.  **Identify the Artifact**:
+    - Language/Framework (e.g., TypeScript/React, Python/FastAPI).
+    - Type (Snippet, Full Class, Config, Architectural Diagram).
+    - Intent (Data Transformation, UI Rendering, API Handling).
+
+2.  **Scan for Dependencies**:
+    - Note imports or external libraries used in the input (e.g., `lodash`, `pandas`, `redux`).
+
+## Phase 2: Structural Deconstruction
+
+3.  **Trace the Execution Flow**:
+    - Follow the data: Input -> Transformation -> Output.
+    - Identify Control Structures: Loops, Conditionals, Recursion.
+    - Identify State Management: Mutable variables, Databases, Stores.
+
+4.  **Isolate Key Components**:
+    - Variables/Constants (Magic numbers?).
+    - Functions/Methods (Pure vs. Side-effects).
+    - Classes/Objects (Inheritance, Polymorphism).
+
+## Phase 3: Pattern Recognition & Conceptualization
+
+5.  **Identify Design Patterns**:
+    - Is this a Singleton? Observer? Factory? Middleware?
+    - Is it a specific algorithm (Binary Search, DFS)?
+
+6.  **Formulate the Mental Model**:
+    - Create a high-level abstraction.
+    - **Select an Analogy**: Find a real-world parallel (e.g., "This Promise is like a pager at a restaurant").
+
+## Phase 4: Critical Analysis (The "Senior Dev" View)
+
+7.  **Evaluate Performance**:
+    - Time Complexity: Big O notation (`O(n)`, `O(log n)`).
+    - Space Complexity: Memory usage.
+
+8.  **Audit Quality & Security**:
+    - Spot Anti-patterns (Spaghetti code, Magic strings).
+    - Security Risks (SQL Injection, XSS, ReDoS).
+    - Readability & Maintainability.
+
+## Phase 5: Synthesis
+
+9.  **Draft the Explanation**:
+    - Combine the "What" (Executive Summary), "How" (Deep Dive), and "Why" (Mental Model) into the final output format.
+
+</process>
+
+<input_data>
+{{args}}
+</input_data>
+
+<output_instructions>
+### 💡 Executive Summary
+(1-2 sentences capturing the essence. Use a brief analogy if helpful.)
+
+### 🧩 Mental Model & Concepts
+- **Core Concept**: [Name of the pattern/concept]
+- **The "ELI5" Analogy**: [Explain it like I'm 5 using a real-world scenario]
+- **Why it matters**: [Architectural justification - why use this approach?]
+
+### ⚙️ Technical Deep Dive
+- **Execution Flow**:
+  1. [Step 1]
+  2. [Step 2]
+- **Complexity**: Time: `O(?)` | Space: `O(?)`
+- **Key Mechanics**:
+    - `[Component]`: [Detailed explanation of its role]
+
+### ⚠️ Expert Review
+- **Potential Issues**: [Bugs, Security Risks, Edge Cases]
+- **Refactoring Tip**: [How a Senior Engineer would improve this code]
+</output_instructions>
+"""

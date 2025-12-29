@@ -1,0 +1,19 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "mcpServers": {
+    "context7": {
+      "httpUrl": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "ctx7sk-4ffeb251-1283-4799-9292-d35ffcb8f6cc",
+        "Accept": "application/json, text/event-stream"
+      }
+    }
+  },
+  "general": {
+    "previewFeatures": true
+  }
+}

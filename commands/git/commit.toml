@@ -1,0 +1,99 @@
+description = "Generates semantic, conventional commit messages with breaking change detection and smart scope inference."
+
+prompt = """
+---
+description: Generates a perfect Conventional Commit message by analyzing git context and user intent.
+---
+
+<objective>
+Generate a single, precise, and compliant Conventional Commit message.
+The message must strictly follow the **Conventional Commits 1.0.0** specification, enabling automated semantic versioning (SemVer) and changelog generation.
+</objective>
+
+<context>
+Current Branch: `!git branch --show-current`
+Recent History (Style Reference): `!git log -n 5 --pretty=format:"%h %s"`
+Staged Files Summary:
+!{git diff --staged --name-status}
+
+Detailed Changes:
+```diff
+!{git diff --staged --ignore-all-space --ignore-blank-lines | head -c 10000}
+```
+</context>
+
+<process>
+## Phase 1: Context & Intent Analysis
+
+1.  **Analyze User Input**:
+    - Extract the "Why" from: "{{args}}"
+    - If input is empty, infer purely from code changes.
+
+2.  **Analyze Code Changes**:
+    - Identify the *nature* of the change (feature, fix, refactor, style, etc.).
+    - Identify the *scope* (files/modules affected).
+    - Detect *severity* (breaking changes vs backward compatible).
+
+## Phase 2: Structural Classification
+
+3.  **Determine Type**:
+    - `feat`: (Minor) New functionality for the user.
+    - `fix`: (Patch) Bug fix for the user.
+    - `perf`: Performance improvement.
+    - `refactor`: Code change that neither fixes a bug nor adds a feature.
+    - `style`, `test`, `docs`, `build`, `ci`, `chore`: Maintenance types.
+
+4.  **Infer Scope**:
+    - Determine the most specific noun describing the affected component (e.g., `auth`, `api`, `button`).
+    - If multiple scopes, use the most dominant one or `*`.
+
+5.  **Check for Breaking Changes**:
+    - Look for: Removed public functions, changed API signatures, config schema changes.
+    - Action: If found, prepare `BREAKING CHANGE:` footer.
+
+## Phase 3: Composition
+
+6.  **Draft Header**:
+    - Format: `<type>(<scope>): <description>`
+    - Rules: Imperative mood ("add" not "added"), no capitalization (unless proper noun), no period, max 72 chars.
+
+7.  **Draft Body** (if needed):
+    - Explain *what* changed and *why*.
+    - Bullet points for multiple sub-changes.
+
+8.  **Draft Footer**:
+    - `Closes #123` (if issue referenced).
+    - `BREAKING CHANGE: <description>` (if applicable).
+
+## Phase 4: Final Verification
+
+9.  **Review Checklist**:
+    - ✅ Header under 72 chars?
+    - ✅ Imperative mood used?
+    - ✅ Type/Scope matches file paths?
+    - ✅ Breaking changes explicitly noted?
+
+</process>
+
+<input_data>
+User Intent: "{{args}}"
+</input_data>
+
+<output_instructions>
+### 📝 Commit Analysis
+(Briefly explain the choice of type (e.g., "Bumped to 'feat' due to new API endpoint") and scope.)
+
+### 💻 Commit Message
+```text
+<type>(<scope>): <description>
+
+<body>
+
+<footer>
+```
+
+### ⚠️ Review
+- **SemVer Impact**: [Patch / Minor / Major]
+- **Breaking Change**: [Yes / No]
+</output_instructions>
+"""

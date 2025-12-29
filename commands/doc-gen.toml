@@ -1,0 +1,93 @@
+description = "Generates comprehensive, audience-aware technical documentation (JSDoc, READMEs, Architecture) with Mermaid visualization."
+
+prompt = """
+---
+description: Transforms technical artifacts into clear, structured, and visual documentation.
+---
+
+<objective>
+Generate professional, high-impact technical documentation.
+Bridge the gap between complex implementation details and human understanding.
+Prioritize clarity, completeness, and visual explanations (Mermaid.js) where applicable.
+</objective>
+
+<context>
+Project Structure: `!ls -F | head -20`
+Documentation Folder: `!ls docs/ 2>/dev/null || echo "No docs folder"`
+Readme: `!ls README.md 2>/dev/null || echo "No README"`
+</context>
+
+<process>
+## Phase 1: Context & Audience Profiling
+
+1.  **Analyze the Artifact**:
+    - **Type**: Source Code (API), System (Architecture), or Product (User Guide)?
+    - **Format**: JSDoc, Python Docstring, Markdown, or Mermaid Diagram?
+
+2.  **Define the Audience**:
+    - **Developers**: Focus on types, interfaces, edge cases, and integration.
+    - **Architects**: Focus on patterns, data flow, scalability, and infrastructure.
+    - **End-Users**: Focus on "How-to", configuration, and troubleshooting.
+
+## Phase 2: Technical Deep Dive & Extraction
+
+3.  **Scan for Key Components**:
+    - **Public API**: Exported functions, classes, endpoints.
+    - **Data Models**: Schemas, interfaces, types.
+    - **Complexity**: State machines, recursive logic, async workflows.
+
+4.  **Extract Critical Metadata**:
+    - **Inputs**: Parameters, arguments, env vars.
+    - **Outputs**: Return types, artifacts, exit codes.
+    - **Side Effects**: Database writes, API calls, file I/O.
+    - **Errors**: Thrown exceptions, error codes.
+
+## Phase 3: Content Drafting & Structuring
+
+5.  **Select Standard Format**:
+    - **Code**: Use language-native standards (JSDoc for JS/TS, Google Style for Python).
+    - **Docs**: Use GitHub Flavored Markdown (GFM).
+
+6.  **Draft Core Sections**:
+    - **Overview**: 1-sentence "What is this?".
+    - **Usage**: A copy-pasteable code snippet or command.
+    - **API Reference**: Detailed param/return/error tables.
+    - **Configuration**: Env vars and config files.
+
+## Phase 4: Visualization (The "Picture is Worth 1000 Words")
+
+7.  **Identify Diagram Opportunities**:
+    - **Flowchart**: For complex `if/else` or async logic.
+    - **Sequence Diagram**: For API interactions or auth flows.
+    - **Class Diagram**: For complex inheritance or database schemas.
+
+8.  **Generate Mermaid.js**:
+    - Create clean, readable Mermaid code blocks.
+
+## Phase 5: Quality Assurance
+
+9.  **Verify & Refine**:
+    - **Tone Check**: Is it active and professional? ("Call this function..." vs "This function is called...")
+    - **Completeness**: Are all parameters defined?
+    - **Clarity**: Is the usage example working code?
+
+</process>
+
+<input_data>
+{{args}}
+</input_data>
+
+<output_instructions>
+### 📘 Documentation Preview
+(Code block with comments or Markdown content. Ensure syntax highlighting.)
+
+### 🧜‍♀️ Architecture / Flow
+(Mermaid.js code block. ONLY if logic justifies visualization.)
+
+### 📝 Documentation Log
+- **Scope**: [What was documented]
+- **Audience**: [Target audience identified]
+- **Visuals**: [Rationale for diagram choice]
+- **Assumptions**: [Any guesses made due to missing context]
+</output_instructions>
+"""

@@ -1,0 +1,96 @@
+description = "Generates brandable, SEO-friendly domain names using linguistic patterns, competitor analysis, and availability heuristics."
+
+prompt = """
+---
+description: Generates high-value, available-likely domain names by applying professional naming frameworks and TLD strategies.
+---
+
+<objective>
+Generate a list of 10-15 high-quality, brandable domain names based on the user's project description.
+The names must vary in style (Descriptive, Abstract, Compound, Tech-focused) and prioritize available extension combinations (.com, .io, .ai, .app, .dev).
+</objective>
+
+<context>
+User Input: "{{args}}"
+System Tools: `!whois --version 2>/dev/null || echo "whois tool not found"`
+</context>
+
+<process>
+## Phase 1: Semantic Core & Vibe Analysis
+
+1.  **Extract Keywords**:
+    - Identify the "Root" words (e.g., "Finance", "Code", "Health").
+    - Identify "Vibe" words (e.g., "Fast", "Secure", "Smart", "Flow").
+
+2.  **Define the Naming Archetype**:
+    - **Descriptive**: Tells you exactly what it is (e.g., "InvoiceFast").
+    - **Suggestive**: Hints at the benefit (e.g., "Drift", "Slack").
+    - **Abstract/Made-up**: Empty vessel for branding (e.g., "Kodak", "Zynga").
+    - **Compound**: Two words fused (e.g., "FaceBook", "SnapChat").
+    - **Modification**: Misspellings or drops (e.g., "Lyft", "Flickr").
+
+## Phase 2: The Generation Matrix
+
+3.  **Apply Naming Patterns**:
+    - **The "ify/ly" Tactic**: Add suffixes (Shopify, Bitly).
+    - **The "Prefix" Tactic**: Get, Go, My, Try, Use (GetPocket).
+    - **The "Tech" Tactic**: Merge with tech terms (Bit, Bot, IO, AI, Base, Node, Stack).
+    - **The "Latin/Greek" Tactic**: Use roots (Nova, Terra, Lex, Sol).
+    - **The "Portmanteau" Tactic**: Blend two words (Pinterest = Pin + Interest).
+
+## Phase 3: Extension Strategy (TLD)
+
+4.  **Match TLD to Industry**:
+    - **SaaS/Dev Tools**: `.io`, `.dev`, `.app`.
+    - **AI/ML**: `.ai`.
+    - **Corporate/General**: `.com`, `.co`, `.net`.
+    - **Niche**: `.so` (Notion), `.gg` (Gaming), `.xyz` (Web3).
+
+## Phase 4: Availability Heuristics (Pre-Check)
+
+5.  **Filter the "Impossible"**:
+    - Discard single-word `.com` domains (100% taken).
+    - Discard common 3-letter acronyms.
+    - Prioritize names with 6-12 characters.
+
+## Phase 5: Selection & Ranking
+
+6.  **Select the Top Candidates**:
+    - **Brandability**: Is it easy to spell and pronounce? (The Radio Test).
+    - **Memorability**: Is it sticky?
+    - **Relevance**: Does it make sense for the product?
+
+</process>
+
+<input_data>
+{{args}}
+</input_data>
+
+<output_instructions>
+### 🧠 Naming Strategy Analysis
+(Briefly explain the keywords and archetypes targeted.)
+
+### 💎 Top Domain Candidates
+
+| Name | TLD Suggestions | Type | Why it works |
+| :--- | :--- | :--- | :--- |
+| `[Name]` | `.com`, `.io` | [e.g. Compound] | [Brief reasoning] |
+| `[Name]` | `.ai`, `.app` | [e.g. Abstract] | [Brief reasoning] |
+(Provide 10-15 rows)
+
+### 🕵️‍♂️ Availability Check Command
+(Copy-paste this to check availability immediately)
+```bash
+echo "Checking availability..."
+for d in [list_of_top_5_domains_with_extensions]; do
+  echo -n "$d: "
+  whois $d 2>/dev/null | grep -iE "No match|NOT FOUND|is available" && echo "✅ PROBABLY AVAILABLE" || echo "❌ LIKELY TAKEN"
+  sleep 1
+done
+```
+
+### 💡 Branding Advice
+- **Radio Test**: [Comment on the pronounceability of the list]
+- **SEO Impact**: [Brief note on keywords in domain vs branding]
+</output_instructions>
+"""

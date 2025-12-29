@@ -1,0 +1,118 @@
+description = "Generates comprehensive, compliance-ready legal document templates (Privacy, ToS, Cookies) with deep project analysis."
+
+prompt = """
+---
+description: Generates tailored legal document templates based on project analysis and compliance requirements.
+---
+
+<objective>
+Generate a complete set of professional legal documents (Privacy Policy, Terms of Service, Cookie Policy, and optional DPA) specifically tailored to the SaaS project's architecture, data handling, and jurisdiction.
+
+Create documents that are legally robust, clear to users, and compliant with major regulations (GDPR, CCPA). These documents should act as a "Legal MVP" for the project.
+</objective>
+
+<context>
+Project Structure: `!ls -R | head -50`
+Dependencies (Data Processors): `!cat package.json 2>/dev/null | grep -E "stripe|auth0|firebase|posthog|segment|mixpanel|google-analytics|clerk|supabase|sentry" || echo "No major data processors in package.json"`
+Existing Legals: `!ls public/legals/ docs/legal/ static/ 2>/dev/null | grep -iE "privacy|terms|tos|cookie" || echo "No existing legal files found"`
+</context>
+
+<process>
+## Phase 1: Project Profiling & Understanding
+
+1. **Identify the Business Model**:
+   - Ask: "Is this a B2B SaaS (requiring a DPA) or a B2C application?"
+   - Ask: "Where is the legal entity incorporated? (e.g., USA, EU, UK)"
+
+2. **Analyze the Tech Stack for Data Mapping**:
+   - Scan `package.json` and imports for third-party services.
+   - Map dependencies to legal requirements:
+     - **Payments**: Stripe/PayPal -> Financial data clauses.
+     - **Auth**: Clerk/Auth0/Firebase -> PII (Personally Identifiable Information) handling.
+     - **Analytics**: Google/PostHog -> Tracking & Cookie disclosure.
+     - **Error Tracking**: Sentry -> Log data handling.
+
+3. **Determine Data Collection Scope**:
+   - ✅ Core: Email, Name, IP Address.
+   - 🚧 Optional: Phone, Physical Address, Behavioral data.
+   - ❌ Sensitive: Health, Financial (if handled directly), Biometric.
+
+## Phase 2: Compliance Scoping
+
+4. **Map Jurisdictions**:
+   - **GDPR**: (If EU users/entity) Needs DPO info, Right to Erasure, and legal basis for processing.
+   - **CCPA/CPRA**: (If California users) Needs "Do Not Sell" clauses and specific consumer rights.
+   - **CalOPPA**: Needs specific privacy policy visibility rules.
+
+5. **Identify Necessary Documents**:
+   - [ ] Privacy Policy (Required for all)
+   - [ ] Terms of Service (Required for SaaS)
+   - [ ] Cookie Policy (Required for EU/UK or tracking usage)
+   - [ ] Data Processing Agreement (DPA) (If B2B)
+
+## Phase 3: Verification
+
+6. **Confirm Analysis Complete**:
+   - ✅ Data processors identified from dependencies.
+   - ✅ Primary jurisdiction defined.
+   - ✅ User base type (B2B/B2C) confirmed.
+   - ✅ All major data touchpoints mapped.
+
+   **IF GAPS EXIST**: Ask clarifying questions about data retention and specific third-party integrations not found in code.
+
+## Phase 4: Document Generation
+
+7. **Create Folder Structure**:
+   ```bash
+   mkdir -p public/legal
+   ```
+
+8. **Generate Individual Documents**:
+   - File Naming: `privacy-policy.md`, `terms-of-service.md`, `cookie-policy.md`.
+   - Use placeholders like `[COMPANY_NAME]`, `[EFFECTIVE_DATE]`, `[CONTACT_EMAIL]`.
+
+9. **Document Structure Guidelines**:
+   - **Privacy Policy**:
+     - 1. Information Collection
+     - 2. Use of Data
+     - 3. Third-Party Sharing (listing identified services)
+     - 4. Security
+     - 5. Your Rights (GDPR/CCPA sections)
+     - 6. Contact Information
+   - **Terms of Service**:
+     - 1. Acceptance of Terms
+     - 2. Description of Service
+     - 3. User Obligations & Restrictions
+     - 4. Intellectual Property
+     - 5. Limitation of Liability
+     - 6. Termination
+     - 7. Governing Law
+
+## Phase 5: Implementation Guide
+
+10. **Create `public/legal/README.md`**:
+    - Summary of the legal setup.
+    - Deployment checklist (where to link these files in the UI).
+    - Compliance action items (e.g., "Add cookie consent banner").
+</process>
+
+<input_data>
+{{args}}
+</input_data>
+
+<output_instructions>
+### ⚖️ Legal Implementation Strategy
+(Provide a brief summary of the detected tech stack and the resulting legal requirements.)
+
+### 📂 Generated Documents
+(For each document requested/needed, provide the full Markdown content in a code block with the suggested filename.)
+
+### ✅ Compliance Checklist
+- [ ] **Technical**: (e.g., "Update signup form with ToS checkbox")
+- [ ] **External**: (e.g., "Sign DPA with Stripe")
+- [ ] **UI**: (e.g., "Add link to footer")
+
+### ⚠️ Final Disclaimer
+> **IMPORTANT**: I am an AI, not a lawyer. These documents are templates based on common SaaS patterns and your code analysis. They MUST be reviewed by qualified legal counsel before use to ensure full compliance with your specific jurisdiction and business practices.
+</output_instructions>
+"""
