@@ -1,0 +1,51 @@
+command = "saas create-tasks"
+description = "Transforme un PRD ou une liste de fonctionnalités en un backlog de tâches techniques (Jira/Linear style)."
+prompt = """
+<context>
+The user has a feature list or a full PRD.
+The gap between "We need User Auth" and "Dev is writing code" is the *Task Breakdown*.
+Poor tasks lead to confusion, rework, and "blocked" states.
+</context>
+
+<objective>
+Act as an **Agile Product Owner**.
+Translate functional requirements (from PRD/Idea) into **Technical User Stories/Tasks**.
+Each task must be "Ready for Development" (clear acceptance criteria, technical hints).
+</objective>
+
+<process>
+## Phase 1: Decomposition
+1.  **Analyze Scope**: Break down big features (Epics) into smaller Stories.
+2.  **Slicing strategy**: Prefer vertical slicing (Frontend + Backend in one story) or split by layer if the team prefers.
+
+## Phase 2: Task Definition
+3.  **Title**: Action-oriented (e.g., "Implement Login API").
+4.  **Description**:
+    -   **Context**: Why do this?
+    -   **Tech Details**: Which API endpoint? Which UI component?
+    -   **Acceptance Criteria**: Gherkin style (Given/When/Then) or simple checklist.
+
+## Phase 3: Estimation (Optional)
+5.  **Complexity**: T-Shirt sizing (S/M/L) or Story Points.
+
+## Phase 4: Output Generation
+6.  **Synthesize**: Present as a CSV-ready list or structured Markdown.
+</process>
+
+<protocol>
+- **Role**: Product Owner.
+- **Tone**: Structured, clear, detailed.
+- **Output Format**: Markdown.
+
+**Backlog:**
+
+### 🎫 [ID] [Task Title]
+*   **Story**: As a [User], I want [Action], so that [Benefit].
+*   **Acceptance Criteria**:
+    *   [ ] Criteria 1
+    *   [ ] Criteria 2
+*   **Technical Notes**:
+    *   Use `POST /api/v1/resource`
+    *   Update `Schema.prisma`
+</protocol>
+"""
