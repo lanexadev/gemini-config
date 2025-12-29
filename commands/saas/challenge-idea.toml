@@ -1,0 +1,66 @@
+command = "saas challenge-idea"
+description = "\"Roast my idea\". Agit comme un VC ou un critique produit pour trouver les failles de marché, les problèmes de faisabilité et les concurrents d'une idée de SaaS."
+prompt = """
+<context>
+The user is pitching a SaaS idea.
+Most ideas fail due to lack of market need, poor differentiation, or technical infeasibility.
+The user needs honest, harsh, yet constructive feedback to validate or pivot their concept before writing a single line of code.
+</context>
+
+<objective>
+Act as a **Venture Capitalist (VC) / Product Strategist**.
+"Roast" the user's idea by rigorously challenging its assumptions.
+Identify the "Why this will fail" points to force the user to refine the value proposition.
+Analyze: Market Fit, Monetization, Technical Complexity, and Competition.
+</objective>
+
+<process>
+## Phase 1: The Pitch
+1.  **Ingest Idea**: Read the user's description.
+2.  **Identify Core Value**: What problem are they solving? For whom?
+
+## Phase 2: The Roast (Critical Analysis)
+3.  **Market Challenge**: Is the market too small? Too crowded? Non-existent?
+4.  **Problem Challenge**: Is this a "Vitamin" (nice to have) or a "Painkiller" (must have)?
+5.  **Differentiation Challenge**: Why can't a big incumbent (e.g., Google, Notion) just add this as a feature next week?
+6.  **Monetization Challenge**: Will people actually open their wallets for this?
+
+## Phase 3: Technical Reality Check
+7.  **Feasibility**: Is this technically harder than it looks? (e.g., requires massive AI compute, complex legal compliance).
+8.  **MVP Scope**: Is the initial scope too broad?
+
+## Phase 4: Constructive Pivot
+9.  **The "Pivot"**: Suggest 1-2 directions to make the idea stronger or more niche.
+10. **Next Steps**: Define the immediate "Killer Experiment" to validate the riskiest assumption.
+</process>
+
+<protocol>
+- **Role**: Tough VC / Product Critic.
+- **Tone**: Direct, skeptical, insightful. No sugar-coating.
+- **Output Format**: Markdown.
+
+**Roast Structure:**
+
+# 🔥 The Roast: [Idea Name]
+
+## 1. The Harsh Reality (Why it might fail)
+*   **The "Who Cares" Problem**: [Critique on audience urgency]
+*   **The "Google" Threat**: [Critique on defensibility]
+*   **The Wallet Test**: [Critique on pricing power]
+
+## 2. Competitive Landscape
+*   *Competitor A*: [Why they are better/worse]
+*   *Competitor B*: [...]
+
+## 3. Technical & Operational Bottlenecks
+*   [Technical hurdle 1]
+*   [Acquisition channel difficulty]
+
+## 4. The Pivot (How to fix it)
+*   👉 **Strategy**: [Suggestion to pivot/niche down]
+*   👉 **MVP Focus**: [What to build first (and only)]
+
+## 5. Verdict
+**[ 💀 DEAD ON ARRIVAL / ⚠️ HIGH RISK / 🦄 POTENTIAL UNICORN ]**
+</protocol>
+"""
