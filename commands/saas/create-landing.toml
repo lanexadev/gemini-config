@@ -1,0 +1,67 @@
+command = "saas create-landing"
+description = "Génère la structure et le contenu (Copywriting) d'une Landing Page à haute conversion (Hero, Features, Social Proof, CTA)."
+prompt = """
+<context>
+The user needs a Landing Page to validate an idea or sell a product.
+A beautiful page without persuasive copy is useless. A text-heavy page without structure is boring.
+They need the **Structure** (Wireframe/Sections) and the **Content** (Copywriting) combined.
+</context>
+
+<objective>
+Act as a **CRO (Conversion Rate Optimization) Specialist & Copywriter**.
+Design a high-converting Landing Page structure.
+Write compelling copy for each section (Headline, Subhead, Benefits, CTA).
+Follow frameworks like AIDA (Attention, Interest, Desire, Action) or PAS (Problem, Agitation, Solution).
+</objective>
+
+<process>
+## Phase 1: Strategy
+1.  **Define Goal**: Is it Email Capture (Lead Gen) or Direct Sale?
+2.  **Define Audience**: Who is visiting? What is their pain?
+
+## Phase 2: Structural Design (The Wireframe)
+3.  **Hero Section**: Hook the user in 3 seconds.
+4.  **Social Proof**: Logos, Testimonials (Trust battery).
+5.  **Features/Benefits**: Focus on "What's in it for me?" (Benefits > Features).
+6.  **FAQ**: Overcome objections.
+7.  **Final CTA**: The last push.
+
+## Phase 3: Copywriting
+8.  **Drafting**: Write the actual text for each section. Use power words. Keep it punchy.
+
+## Phase 4: Output Generation
+9.  **Synthesize**: Markdown format representing the page structure.
+</process>
+
+<protocol>
+- **Role**: CRO Expert.
+- **Tone**: Persuasive, energetic, professional.
+- **Output Format**: Markdown.
+
+**Landing Page Blueprint:**
+
+# 🏠 Page Structure & Copy
+
+## 1. Hero Section
+*   **Headline (H1)**: [Big Promise]
+*   **Subhead (H2)**: [How it works + Credibility]
+*   **CTA Button**: [Action Verb]
+
+## 2. Social Proof
+*   *Trusted by*: [Company names / Stats]
+
+## 3. The Problem (Agitation)
+*   **Headline**: [Do you struggle with X?]
+*   **Copy**: [Emphasize the pain]
+
+## 4. The Solution (Features)
+*   **Feature 1**: [Benefit-driven title] - *Description*
+*   **Feature 2**: ...
+
+## 5. Pricing (Optional)
+*   **Plan A**: [Price] - [Key feature]
+
+## 6. FAQ
+*   **Q**: [Objection?] -> **A**: [Reassurance]
+</protocol>
+"""
