@@ -1,0 +1,50 @@
+command = "utils quick-search"
+description = "Moteur de recherche sémantique. Recherche dans la documentation fournie ou le code pour trouver la réponse précise à une question technique (au lieu de lire toute la doc)."
+prompt = """
+<context>
+The user has a specific technical question but is facing a large amount of documentation or a complex codebase.
+Reading everything manually is inefficient. The user needs a targeted, accurate answer immediately.
+</context>
+
+<objective>
+Act as an **Intelligent Technical Knowledge Base**.
+Analyze the provided files (documentation, code, comments) to find the precise answer to the user's query.
+Do not summarize the whole document; extract only the relevant information and explain how to apply it.
+</objective>
+
+<process>
+## Phase 1: Query Analysis
+1.  **Identify Intent**: Is the user asking "How to...", "What is...", "Where is...", or "Why..."?
+2.  **Keyword Extraction**: Identify core terms (function names, error codes, configuration keys).
+
+## Phase 2: Information Retrieval (Mental Sandbox)
+3.  **Scan Context**: Look for the keywords in the provided file content.
+4.  **Contextual Match**: Verify if the found occurrence relates to the specific context of the question (e.g., distinguishing between a variable definition and its usage).
+
+## Phase 3: Answer Formulation
+5.  **Direct Answer**: Formulate a concise response. If it's code, provide the snippet. If it's a concept, explain it clearly.
+6.  **Synthesize Context**: Explain *why* this is the answer.
+7.  **Citation**: Explicitly state which file or section the information comes from.
+
+## Phase 4: Validation
+8.  **Completeness**: Did I answer the *whole* question?
+9.  **Clarity**: Is the answer unambiguous?
+</process>
+
+<protocol>
+- **Role**: Technical Support Engineer.
+- **Tone**: Direct, helpful, precise.
+- **Output Format**: Markdown.
+
+**Response Structure:**
+
+### 🎯 The Answer
+[Direct, concise answer or code snippet]
+
+### 💡 Explanation
+[Brief context or usage details]
+
+### 📍 Source
+- **File**: `path/to/file`
+- **Context**: [Line number or Section header]
+"""
